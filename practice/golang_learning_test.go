@@ -3,6 +3,7 @@ package practice
 import (
 	"context"
 	"strings"
+	"sync"
 	"testing"
 	"time"
 
@@ -20,24 +21,24 @@ func TestGolang(t *testing.T) {
 	})
 
 	t.Run("goroutine에서 slice에 값 추가해보기", func(t *testing.T) {
-		//var numbers []int
-		// var wg sync.WaitGroup
-		// wg.Add(99)
-		// for i := 0; i < 100; i++ {
-		// 	go func() {
-		// 		// TODO numbers에 i 값을 추가해보세요.
-		// 		numbers = append(numbers, i)
-		// 		wg.Done()
-		// 	}()
-		// }
-		// wg.Wait()
+		var numbers []int
+		var wg sync.WaitGroup
+		wg.Add(99)
+		for i := 0; i < 100; i++ {
+			go func() {
+				// TODO numbers에 i 값을 추가해보세요.
+				numbers = append(numbers, i)
+				wg.Done()
+			}()
+		}
+		wg.Wait()
 
-		// var expected []int // actual : [0 1 2 ... 99]
-		// // TODO expected를 만들어주세요.
-		// for j := 0; j < 100; j++ {
-		// 	expected = append(expected, j)
-		// }
-		//assert.ElementsMatch(t, expected, numbers)
+		var expected []int // actual : [0 1 2 ... 99]
+		// TODO expected를 만들어주세요.
+		for j := 0; j < 100; j++ {
+			expected = append(expected, j)
+		}
+		assert.ElementsMatch(t, expected, numbers)
 	})
 
 	t.Run("fan out, fan in", func(t *testing.T) {
