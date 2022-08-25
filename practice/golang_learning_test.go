@@ -108,6 +108,19 @@ func TestGolang(t *testing.T) {
 		// context에 key, value를 추가해보세요.
 		// 추가된 key, value를 호출하여 assert로 값을 검증해보세요.
 		// 추가되지 않은 key에 대한 value를 assert로 검증해보세요.
+		var v string
+		var k int
+		var wg sync.WaitGroup
+		wg.Add(1)
+
+		ctx := context.WithValue(context.Background(), k, v)
+		wg.Wait()
+
+		var actual = ctx
+
+		var expeted map[int]string
+
+		assert.EqualValues(t, expeted, actual)
 	})
 }
 
