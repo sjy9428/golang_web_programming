@@ -23,13 +23,13 @@ func TestGolang(t *testing.T) {
 	t.Run("goroutine에서 slice에 값 추가해보기", func(t *testing.T) {
 		var numbers []int
 		var wg sync.WaitGroup
-		wg.Add(99)
+		wg.Add(100)
 		for i := 0; i < 100; i++ {
-			go func() {
+			go func(i int) {
 				// TODO numbers에 i 값을 추가해보세요.
 				numbers = append(numbers, i)
 				wg.Done()
-			}()
+			}(i)
 		}
 		wg.Wait()
 
@@ -73,6 +73,11 @@ func TestGolang(t *testing.T) {
 		startTime := time.Now()
 		add := time.Second * 3
 		ctx := context.TODO() // TODO 3초후에 종료하는 timeout context로 만들어주세요.
+		var wg sync.WaitGroup
+		wg.Add(1)
+		ctx, cancel := context.WithTimeout(context.Background(), add)
+		cancel()
+		wg.Wait()
 
 		var endTime time.Time
 		select {
